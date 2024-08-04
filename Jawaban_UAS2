@@ -1,0 +1,48 @@
+def binary_search(arr, target):
+    low = 0
+    high = len(arr) - 1
+    result_indices = []
+
+    while low <= high:
+        mid = (low + high) // 2
+
+        if arr[mid] == target:
+            left = mid
+            right = mid
+            while left >= 0 and arr[left] == target:
+                result_indices.append(left)
+                left -= 1
+            while right < len(arr) and arr[right] == target:
+                if right not in result_indices:
+                    result_indices.append(right)
+                right += 1
+            break
+        elif arr[mid] < target:
+            low = mid + 1
+        else:
+            high = mid - 1
+
+    return sorted(result_indices)
+
+
+# Array yang diberikan
+array = [19, 40, 10, 90, 2, 50, 60, 50, 1]
+
+# Mengurutkan array untuk pencarian binary search
+sorted_array = sorted(array)
+print(f"Array yang diurutkan: {sorted_array}")
+
+# Test Case
+input_value = 1
+
+# Mencari nilai input_value dalam array yang sudah diurutkan
+indices = binary_search(sorted_array, input_value)
+
+# Output hasil pencarian
+if indices:
+    # Menemukan nilai target, cari indeks asli di array yang tidak diurutkan
+    original_indices = [i for i, x in enumerate(array) if x == input_value]
+    print(
+        f"Angka {input_value} ada di indeks ke {', '.join(map(str, original_indices))} pada array yang tidak diurutkan.")
+else:
+    print(f"Angka {input_value} tidak ditemukan dalam array.")
